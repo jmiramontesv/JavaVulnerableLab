@@ -1,4 +1,4 @@
-name: FoD SAST scan                                     # Name of this workflow
+name: FoD SAST and Import                                    # Name of this workflow
 on:
   push:                                                 # Perform Fortify SAST on push and/or pull requests
     branches:
