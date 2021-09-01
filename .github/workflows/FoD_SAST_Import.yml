@@ -1,0 +1,60 @@
+name: FoD SAST scan                                     # Name of this workflow
+on:
+  push:                                                 # Perform Fortify SAST on push and/or pull requests
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:                                                  
+  build:
+    runs-on: ubuntu-latest                              # Use the appropriate runner for building your source code
+
+    steps:
+      - uses: actions/checkout@v2                       # Check out source code
+      - uses: actions/setup-java@v1                     # Set up Java 1.8; required by ScanCentral Client and FoD Uploader
+        with:
+          java-version: 1.8
+
+      ### Set up ScanCentral Client and FoD Uploader ###
+      - uses: fortify/gha-setup-scancentral-client@v1   # Set up ScanCentral Client and add to system path
+      - uses: fortify/gha-setup-fod-uploader@v1         # Set up FoD Uploader, set FOD_UPLOAD_JAR variable
+
+      ### Package source code using ScanCentral Client ###
+      - run: scancentral package -bt mvn -o package.zip
+
+      ### Start Fortify on Demand SAST scan ###
+      - run: java -jar $FOD_UPLOAD_JAR -z package.zip -aurl https://api.sandbox.fortify.com/ -purl https://sandbox.fortify.com/ -rid "$FOD_RELEASE_ID" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 2 -pp 1
+        env:                                            
+          FOD_TENANT: ${{ secrets.FODS_TENANT }}
+          FOD_USER: ${{ secrets.FODS_USER }}
+          FOD_PAT: ${{ secrets.FODS_PAT }}
+          FOD_RELEASE_ID: ${{ secrets.FODS_RELEASE_ID }} 
+
+      ### Archive ScanCentral logs and package ###
+      - uses: actions/upload-artifact@v2                # Archive ScanCentral logs for debugging purposes
+        if: always()
+        with:
+          name: scancentral-logs
+          path: ~/.fortify/scancentral/log
+      - uses: actions/upload-artifact@v2                # Archive ScanCentral package for debugging purposes
+        if: always()
+        with:
+          name: package
+          path: package.zip
+          
+      # Once scan completes, pull SAST issues from Fortify on Demand and generate SARIF output.
+      - name: Export results to GitHub-optimized SARIF
+        uses: fortify/gha-export-vulnerabilities@v1
+        with:
+          fod_base_url: ${{ secrets.FOD_BASE_URL }}
+          fod_tenant: ${{ secrets.FOD_TENANT }}
+          fod_user: ${{ secrets.FODS_USER }}
+          fod_password: ${{ secrets.FODS_PAT }}
+          fod_release_id: ${{ secrets.FODS_RELEASE_ID }}
+      
+      # Import Fortify on Demand results to GitHub Security Code Scanning
+      - name: Import results to GitHub Security Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: ./gh-fortify-sast.sarif
