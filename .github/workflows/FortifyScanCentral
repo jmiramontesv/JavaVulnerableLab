@@ -59,4 +59,4 @@ jobs:
         if: failure()
         with:
            name: scancentral-logs
-           path: ~/.fortify/scancentral/log
+           path: ~/.fortify/scancentral/log 
