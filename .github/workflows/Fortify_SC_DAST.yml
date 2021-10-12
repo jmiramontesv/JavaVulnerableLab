@@ -19,5 +19,5 @@ jobs:
         url: 'http://54.175.122.17:9090/api/scans/start-scan-cicd'
         method: 'POST'
         customHeaders: "{Authorization=FORTIFYTOKEN NTcwMGFiMWUtMGFmMy00NmQwLTgyODktZTUzOTU0MGMzNDM5}"
-        data: "{'cicdToken':'b755514c-ae26-4226-be4a-f53778c44140', 'name':'PetStore API Scan via Jenkins', 'scannerId':'0', 'useAssignedScannerOnly':'true', 'overrides':{'dataRetentionDays':'0', 'scanPriority':'5','scanMode':'CrawlAndAudit'}}"
+        data: "{'cicdToken':'b755514c-ae26-4226-be4a-f53778c44140', 'name':'PetStore API Scan via Jenkins', 'scannerId':'0', 'useAssignedScannerOnly':'true', 'overrides':{'dataRetentionDays':'0', 'scanPriority':'5','scanMode':'CrawlAndAudit'}"
  
