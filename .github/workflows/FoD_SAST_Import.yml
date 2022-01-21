@@ -24,7 +24,7 @@ jobs:
       - run: scancentral package -bt mvn -o package.zip
 
       ### Start Fortify on Demand SAST scan ###
-      - run: java -jar $FOD_UPLOAD_JAR -z package.zip -aurl https://api.sandbox.fortify.com/ -purl https://sandbox.fortify.com/ -rid "$FOD_RELEASE_ID" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 0
+      - run: java -jar $FOD_UPLOAD_JAR -z package.zip -aurl https://api.sandbox.fortify.com/ -purl https://sandbox.fortify.com/ -rid "$FOD_RELEASE_ID" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep "SingleScan"
         env:                                            
           FOD_TENANT: ${{ secrets.FODS_TENANT }}
           FOD_USER: ${{ secrets.FODS_USER }}
