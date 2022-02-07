@@ -15,5 +15,5 @@ jobs:
     - name: SC DAST Scan
       run: |
          #HTTP_RESPONSE=$(curl -kv -X POST "http://54.175.122.17:9090/api/v2/scans/start-scan-cicd" -H  "accept: text/plain" -H  "Content-Type: application/json-patch+json" -H "'Authorization'='FORTIFYTOKEN YzlhY2RmNzctNTczNi00MGU4LTg1ODctZDU1OTFiNjQzODE3'" -d "{'cicdToken':'b755514c-ae26-4226-be4a-f53778c44140','name':'PetStore API Scan via Jenkins',"scannerId":0,\"useAssignedScannerOnly\":true,\"overrides\":{\"dataRetentionDays\":0,\"scanPriority\":0,\"scanMode\":\"CrawlOnly\",\"workflowDrivenMacroBinaryFileIds\":[0]}}")
-         curl --location --request POST "http://54.237.51.31:9090/api/scans/start-scan-cicd" --header "Authorization: FORTIFYTOKEN YzlhY2RmNzctNTczNi00MGU4LTg1ODctZDU1OTFiNjQzODE3" --header "Content-Type: application/json" --data-raw "{"cicdToken": 'b755514c-ae26-4226-be4a-f53778c44140'}"
+         curl --location --request POST "http://3.94.211.58:9090/api/scans/start-scan-cicd" --header "Authorization: FORTIFYTOKEN YzlhY2RmNzctNTczNi00MGU4LTg1ODctZDU1OTFiNjQzODE3" --header "Content-Type: application/json" --data-raw "{"cicdToken": 'b755514c-ae26-4226-be4a-f53778c44140'}"
          #echo "$HTTP_RESPONSE"
