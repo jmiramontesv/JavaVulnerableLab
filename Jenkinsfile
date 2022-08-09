@@ -1,8 +1,9 @@
 pipeline {
-    agent any
-    tools {
-        jdk 'AdoptOpenJDK11'
-        maven 'Maven_3_8_1'
+    agent {
+        any {
+            image 'maven:3.8.1-adoptopenjdk-11' 
+            args '-v /root/.m2:/root/.m2' 
+        }
     }
     stages {
         stage('Build') { 
