@@ -4,13 +4,7 @@ pipeline {
         maven "Maven-3.8.5"
         jdk "OpenJDK11"
     }
-    stages {
-        stage('Initialize'){
-            steps{
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
-                echo "M2_HOME = /opt/maven"
-            }
-        }
+   
         stage('Build') {
             steps {
                 dir("C:\\Jenkins_Workspace\\workspace\\JavaVuln_Pipeline\\JavaVulnerableLab") {
