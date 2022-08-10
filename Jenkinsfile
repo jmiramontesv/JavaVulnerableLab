@@ -1,17 +1,21 @@
 pipeline {
-    agent any
-    tools {
-        maven "Maven-3.8.5"
-        jdk "OpenJDK11"
+  agent any
+  tools {
+    maven "Maven-3.8.5" 
+  }
+  stages {
+    stage ('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
     }
-    stages {
-       stage('Build') {
-            steps {
-                dir("C:\\Jenkins_Workspace\\workspace\\JavaVuln_Pipeline") {
-                sh 'mvn -B -DskipTests clean package'
-                }
-            }
+    stage ('Deploy') {
+      steps {
+        script {
+          deploy adapters: [tomcat9(credentialsId: 'tomcat_credential', path: '', url: 'http://dayal-test.letspractice.tk:8081')], contextPath: '/pipeline', onFailure: false, war: 'webapp/target/*.war' 
         }
-     }
-    
+      }
+    }
+  }
 }
+       
