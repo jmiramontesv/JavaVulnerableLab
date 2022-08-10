@@ -7,7 +7,7 @@ pipeline {
     stages {
        stage('Build') {
             steps {
-                dir("C:\\Jenkins_Workspace\\workspace\\JavaVuln_Pipeline\\JavaVulnerableLab") {
+                dir("C:\\Jenkins_Workspace\\workspace\\JavaVuln_Pipeline") {
                 sh 'mvn -B -DskipTests clean package'
                 }
             }
