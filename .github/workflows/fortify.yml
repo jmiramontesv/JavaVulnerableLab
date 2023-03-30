@@ -23,8 +23,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ "master" ]
-  schedule:
-    - cron: '27 15 * * 4'
+  #schedule:
+  #  - cron: '27 15 * * 4'
 
 jobs:
   FoD-SAST-Scan:
@@ -78,8 +78,8 @@ jobs:
           #FOD_USER: ${{ secrets.FOD_USER }}
           #FOD_PAT: ${{ secrets.FOD_PAT }}
           FOD_TENANT: "FranklinBank"
-          FOD_USER: "miguel.dzay@microfocus.com"
-          FOD_PAT: "S2Z1RDZxMEBJdGh2ZS5xUU9leUBWMUxwM1pxMmFT0"
+          FOD_USER: "mdz@mf.com"
+          FOD_PAT: "UU9leUBWMUxwM1pxMmFT0"
           FOD_RELEASE_ID: "762519"
           FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
           FOD_UPLOADER_NOTES: 'Triggered by GitHub Actions (${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})'
